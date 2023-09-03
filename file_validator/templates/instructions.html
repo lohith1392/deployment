@@ -1,0 +1,414 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--========== BOX ICONS ==========-->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="{% static 'stylesHome.css' %}">
+    <title>File Processing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Styles for header and footer */
+        header {
+            /* background-color: #333; */
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-buttons {
+            display: flex;
+        }
+
+        .header-buttons button {
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        .header-buttons button:active {
+            background-color: #3e874d;
+        }
+
+        footer {
+            /* background-color: #333; */
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Main layout styles */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            /* Center the content horizontally */
+            align-items: center;
+            /* Center the content vertically */
+            padding: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* Left container styles */
+        /* .upload-files-container */
+
+        /* Keep the same styles for both containers */
+        .instructions-container 
+            {
+            /* Lighter background color */
+            border-radius: 40px;
+            padding: 60px 60px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center horizontally */
+        }
+        .instructions-container h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .instructions-container p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .instructions-container ol {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .instructions-container li {
+            list-style-type: disc; /* Use bullet points */
+            margin-left: 20px; /* Adjust the indentation */
+        }
+
+        /* Responsive layout */
+        @media screen and (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .instructions-container,
+            .upload-files-container {
+                width: 100%;
+                max-width: unset;
+                /* Remove max-width for smaller screens */
+            }
+        }
+
+        /* Dark mode styles */
+
+        /* Styles for header and footer */
+        header {
+            background-color: #fff;
+            /* Set header background to white */
+            color: #333;
+            /* Set header text color to black */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-buttons {
+            display: flex;
+        }
+
+        .header-buttons button {
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        .header-buttons button:active {
+            background-color: #3e874d;
+        }
+
+        footer {
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+
+        body.dark-mode header {
+            background-color: #444;
+            color: #fff;
+        }
+
+        body.dark-mode footer {
+            background-color: #444;
+            color: #fff;
+        }
+
+        body.dark-mode .container {
+            background-color: #333;
+            color: #fff;
+        }
+
+        body.dark-mode .container .instructions h2 {
+            color: #fff;
+        }
+
+        /* body.dark-mode .upload-label, */
+        body.dark-mode .upload-button,
+        body.dark-mode .download-button {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        /* Dark mode button styles */
+        .dark-mode-button {
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode-button:hover {
+            background-color: #45a049;
+        }
+
+        .dark-mode-button:active {
+            background-color: #3e874d;
+        }
+
+        .dark-mode .instructions-container,
+        .dark-mode .upload-files-container {
+            background-color: #333;
+        }
+
+        .sub-menu-wrap {
+                position: absolute;
+                top: 100%;
+                right: 10%;
+                width: 320px;
+                max-height: 0px;
+                overflow: hidden;
+                transition: transform 0.5s;
+            }
+        
+            .sub-menu-wrap.open-menu {
+                max-height: 400px;
+            }
+        
+            .sub-menu {
+                background: #FFF;
+                padding: 20px;
+                margin: 10px;
+            }
+        
+            .user-info {
+                display: flex;
+                align-items: center;
+            }
+        
+            .user-info h3 {
+                font-weight: 500;
+            }
+        
+            .user-info img {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+        
+            .sub-menu hr {
+                border: 0;
+                height: 1px;
+                width: 100%;
+                background: #ccc;
+                margin: 15px 0 10px;
+            }
+        
+            .sub-menu-link {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: #525252;
+                margin: 12px 0;
+            }
+        
+            .sub-menu-link p {
+                width: 100%;
+            }
+        
+            .sub-menu-link img {
+                width: 40px;
+                background: #e5e5e5;
+                border-radius: 50%;
+                padding: 8px;
+                margin-right: 15px;
+            }
+        
+            .sub-menu-link span {
+                font-size: 22px;
+                transition: transform 0.5s;
+            }
+        
+            .sub-menu-link:hover span {
+                transform: translateX(5px);
+            }
+        
+            .sub-menu-link:hover p {
+                font-weight: 600;
+            }
+    </style>
+</head>
+
+<body>
+    <header class="l-header" id="header">
+        <nav class="nav bd-container">
+            <a href="#" class="nav__logo">CSVALID</a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="{% url 'home' %}" class="nav__link active-link">Home</a></li>
+                    <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">Basic Validation</a></li>
+                    <li class="nav__item"><a href="/custom-validation/" class="nav__link">Custom Validation</a></li>
+                    <li class="nav__item"><a href="/instructions/" class="nav__link">Instructions</a></li>
+                    <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
+                </ul>
+            </div>
+            {% if username %}
+            <img src="{%static 'user.png'%}" class="user-pic" style="height: 50px;width: 50px;cursor: pointer;border-radius: 50%;"
+                onclick="toggleMenu()">
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="{%static 'user.png'%}">
+                        <h2 style="color: #333;">hello</h2>
+                    </div>
+                    <hr>
+                    <span class="welcome-text" style="color: #333;">Welcome, {{ username }}</span>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{%static 'profile.png'%}">
+                        <p>Edit profile</p>
+                        <span>></span>
+                    </a>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{%static 'setting.png'%}">
+                        <p>Settings & privacy</p>
+                        <span>></span>
+                    </a>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{%static 'help.png'%}">
+                        <p>Help & Support</p>
+                        <span>></span>
+                    </a>
+                    {% if request.user.is_staff %}
+                    <a href="{% url 'dashboard' %}" class="sub-menu-link">
+                        <img src="{% static 'dashboard.png' %}">
+                        <p>Dashboard</p>
+                        <span>></span>
+                    </a>
+                    {% endif %}
+                    <a href="#" class="">
+                        <a href="{% url 'logout_view' %}" class="sub-menu-link">
+                            <img src="{%static 'logout.png'%}">
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="sub-menu-link">
+                            <img src="{%static 'logout.png'%}">
+                            <p>Login</p>
+                            <span>></span>
+                        </a>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        
+
+        <div class="instructions-container">
+        <h2>Instructions</h2>
+        <p>Follow these steps to upload your file:</p>
+        <ol>
+            <li>Click the "Browse" button or drag and drop your file into the designated area.</li>
+            <li>If the file is successfully uploaded, you will see the file details below.</li>
+            <li>To remove the uploaded file, click the "Delete" icon.</li>
+            <li>Click the "Upload" button to start the upload process.</li>
+            <li>Make sure the first column contains name in string.</li>
+            <li>Make sure the second column contains age in integer.</li>
+            <li>Make sure the third column contains email in string.</li>
+            <li>If any errors occur during the processing, they will be displayed above.</li>
+        </ol>
+    </div>
+    </div>
+
+    <footer>
+        <p>© File Validator. All rights reserved.</p>
+    </footer>
+
+    <script>
+        
+
+        let sub = document.getElementById("subMenu")
+            function toggleMenu() {
+                sub.classList.toggle("open-menu")
+            }
+    </script>
+        <!--========== MAIN JS ==========-->
+        <script src="{% static 'main.js' %}"></script>
+</body>
+
+</html>
